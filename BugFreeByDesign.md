@@ -10,7 +10,7 @@ A la poursuite des bugs, au delà des tests
 # Design
 
 --
-.left[![Center-aligned image](/usablesoftwaredesign/impossible_design.png)]
+.left[![Center-aligned image](/impossible_design.png)]
 --
 Fais plus attention! 
 
@@ -27,7 +27,7 @@ Fais plus attention!
 ---
 # Poka Yoke
 Améliorer le système - Entonnoir de feedback
-.left[![funnelFeedback](/usablesoftwaredesign/FunnelOfFeedback_small.png)]
+.left[![funnelFeedback](/FunnelOfFeedback_small.png)]
 
 ---
 class: center, middle
@@ -41,7 +41,7 @@ Peut-on y faire quelque chose?
 class: center
 # Rendre les erreurs impossibles
 
-.center[![Center-aligned image](/usablesoftwaredesign/toy.png)]
+.center[![Center-aligned image](/toy.png)]
 
 ---
 # Rendre les erreurs impossibles
@@ -173,7 +173,7 @@ class TicTacToe {
 playing a tenth time shouldn't compile
 
 
-.left[![funnelFeedback](/usablesoftwaredesign/TicTacToe_Typed.png)]
+.left[![funnelFeedback](/TicTacToe_Typed.png)]
 
 ---
 
@@ -252,7 +252,7 @@ class: center, middle
 
 Eviter de corriger la config:
 
-.top[![Center-aligned image](/usablesoftwaredesign/dont_fix_the_config_file.png)]
+.top[![Center-aligned image](/dont_fix_the_config_file.png)]
 
 --
 
@@ -272,7 +272,7 @@ Permettre à l'utilisateur de corriger son erreur.
 ```
 
 ---
-.right[![Center-aligned image](/usablesoftwaredesign/toilet_documentation_s.jpg)]
+.right[![Center-aligned image](/toilet_documentation_s.jpg)]
 
 ---
 ## Documentation
@@ -291,16 +291,16 @@ ___
 ... Micro service configuration (hell)
 
 ---
-.top[![argh the diff](/usablesoftwaredesign/diff_of_rename.png)]
+.top[![argh the diff](/diff_of_rename.png)]
 
 ---
-.top[![argh the diff](/usablesoftwaredesign/exploded_diff.png)]
+.top[![argh the diff](/exploded_diff.png)]
 
 ---
-.top[![example code](/usablesoftwaredesign/example_of_output_code.png)]
+.top[![example code](/example_of_output_code.png)]
 
 ---
-.bottom[![argh the diff](/usablesoftwaredesign/project_layout.png)]
+.bottom[![argh the diff](/project_layout.png)]
 
 ---
 layout: false
