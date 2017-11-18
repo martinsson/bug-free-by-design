@@ -27,6 +27,9 @@ Fais plus attention!
 ---
 # Poka Yoke
 Améliorer le système - Entonnoir de feedback
+
+--
+
 .left[![funnelFeedback](/FunnelOfFeedback_small.png)]
 
 ---
@@ -88,21 +91,22 @@ class: center
 describe('TicTacToe', () => {
     it('can blow up!', () => {
         const ticTacToe = new TicTacToe();
-        ticTacToe.moveX(1, 1);
-        ticTacToe.moveY(0, 1);
-        ticTacToe.moveY(0, 0);
+        ticTacToe.occupyX(1, 1);
+        ticTacToe.occupyY(0, 1);
+        ticTacToe.occupyY(0, 0);
     });
 });
 ```
 
 --
+
 ```typescript
 describe('TicTacToe', () => {
     it("just works!", () => {
         const ticTacToe = new TicTacToe();
-        ticTacToe.move(1, 1);
-        ticTacToe.move(0, 1);
-        ticTacToe.move(0, 0);
+        ticTacToe.occupy(1, 1);
+        ticTacToe.occupy(0, 1);
+        ticTacToe.occupy(0, 0);
     });
 });
 ```
@@ -114,7 +118,13 @@ describe('TicTacToe', () => {
 Primitive Obsession
 
 ```typescript
-ticTacToe.move(1, 1);
+ticTacToe.occupy(1, 1);
+```
+
+--
+
+```typescript
+ticTacToe.occupy(2, 3); // illegal input?
 ```
 
 ---
@@ -129,7 +139,11 @@ describe('TicTacToe', () => {
         ticTacToe.occupy(UPPER, LEFT);
     });
 });
+```
 
+--
+
+```typescript
 enum Row {
     UPPER, MIDDLE, LOWER,
 }
@@ -150,7 +164,7 @@ class TicTacToe {
 # Assertions remplacés par les types
 ```typescript
 
-    public moveY(row: number, column: number): any {
+    public occupyY(row: number, column: number): any {
         this.assertIsPlayerYTurn();
         this.assertIsInsideLimits();
         // ...
@@ -160,10 +174,10 @@ class TicTacToe {
 ---
 # Types avancées
 ```typescript
-    public moveY(row: number, column: number): any {
+    public occupyY(row: number, column: number): any {
         this.assertIsPlayerYTurn();
         this.assertIsInsideLimits();
-        this.assertBoardHaveFreeCells(); // <<=====
+        this.assertBoardHasFreeCells(); // <<=====
         // ...
     }
 ```
@@ -212,8 +226,9 @@ class SecondState implements ITicTacToe<ThirdState> {
   /** 
    * javascript FTW!
    */
-  function nullIsCool() {
-	   return undefined
+  function nullIsCool(value) {
+     if (value == null)
+	       return undefined
   }
 
 ```
@@ -241,10 +256,60 @@ Réduction de charge cognitive. Nombre de cas possibles
 - lambdas
 - Eliminer exceptions
 - Scoped code
-- Code focalisé, moins de possibilités
+  - Code focalisé, moins de possibilités
 - Etat immuable
-- pas de vecteur temps
-- pas de messages implicites
+  - pas de vecteur temps
+  - pas de messages implicites
+
+---
+# Maybe - Monads
+
+```javascript
+    getTripsByUser(user) {
+        let tripList = [];
+        let loggedUser = UserSession.getLoggedUser();
+        if (loggedUser != null) {
+            let isFriend = user.getFriends().indexOf(loggedUser) > -1
+            if (isFriend) {
+                tripList = TripDAO.findTripsByUser(user);
+            }
+            return tripList;
+        } else {
+            throw new Error('User not logged in.');
+        }
+    }
+```
+
+--
+
+```javascript
+    // Monadic version of the public function, returns an Either
+    getTripsByUserEither(user, loggedUser) {
+        return Maybe.fromNull(loggedUser)
+            .toEither('User not logged in.')
+            .flatMap(connectedUser => this.doGetTripsByUser(user, connectedUser));
+    }
+
+    // doGetTripsByUser :: user -> user -> Either String (List Trip)
+    doGetTripsByUser(user, loggedUser) {
+        let isFriend = user.isFriendsWith(loggedUser);
+        return isFriend ? this._loadTripsFromDb(user) : noTrips();
+    }
+
+```
+
+---
+### Back to throwing exception
+```javascript
+
+    // Imperative version, calling the monadic one, keeping the contract of throwing
+    getTripsByUser(user, loggedUser) {
+        let eitherTrips = this.getTripsByUserEither(user, loggedUser);
+        return eitherTrips.toImperative(
+            failure => { throw new Error(failure) }
+            );
+    }
+```
 
 ---
 class: center, middle
@@ -258,18 +323,19 @@ Eviter de corriger la config:
 
 Rendre le code résistant
 
----
-# Feedback
-Permettre à l'utilisateur de corriger son erreur.
 
 ---
 ## Documentation
 
 ```java
 /** 
- * Lorsque le design n'est pas intuitive, la documentation est utile. 
+ * Lorsque le design est intuitive, la documentation est inutile. 
  */
 ```
+
+--
+
+Mais parfois la documentation est utile...
 
 ---
 .right[![Center-aligned image](/toilet_documentation_s.jpg)]
@@ -308,3 +374,12 @@ layout: false
 ---
 class: center, middle
 #Merci!
+
+
+---
+# Feedback
+Permettre à l'utilisateur de corriger son erreur.
+## Ex: Go to page bug
+https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/ui/book/Book.js
+https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/ui/book/navigation/Navigation.js
+https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/data/utility/search/SearchOccurenceContext.js
