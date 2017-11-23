@@ -6,7 +6,7 @@ class: center, middle
 .footnote[.red.bold[@johan_alps], Developer]
 
 ---
-background-image: url(/sponsors-agile-grenoble.jpg)
+background-image: url(sponsors-agile-grenoble.jpg)
 background-size: cover;     
 background-position: center;
 background-repeat: no-repeat;
@@ -25,9 +25,9 @@ class: split-40, center
 # Design
 
 --
-.column[![Center-aligned image](/frustrating-kettle-small.jpg)]
+.column[![Center-aligned image](frustrating-kettle-small.jpg)]
 
-.column[![Center-aligned image](/coffeepot-masochists-small-2.jpeg)]
+.column[![Center-aligned image](coffeepot-masochists-small-2.jpeg)]
 
 
 ???
@@ -48,7 +48,7 @@ Améliorer le système - Entonnoir de feedback
 
 --
 
-.left[![funnelFeedback](/FunnelOfFeedback_small.png)]
+.left[![funnelFeedback](FunnelOfFeedback_small.png)]
 
 ---
 class: split-50, middle
@@ -63,7 +63,7 @@ Peut-on ramener la détection plus haut dans l'entonnoir?
 ]
 
 --
-.column[![funnelFeedback](/FunnelOfFeedback_small.png)]
+.column[![funnelFeedback](FunnelOfFeedback_small.png)]
 
 ---
 ### Quelques catalyseurs de bugs
@@ -89,7 +89,7 @@ Peut-on ramener la détection plus haut dans l'entonnoir?
 class: center
 # Rendre les erreurs impossibles
 
-.center[![Center-aligned image](/toy.png)]
+.center[![Center-aligned image](toy.png)]
 
 ---
 # Rendre les erreurs impossibles
@@ -385,7 +385,7 @@ class: center, middle
 
 Eviter de corriger la config:
 --
-.top[![Center-aligned image](/dont_fix_the_config_file.png)]
+.top[![Center-aligned image](dont_fix_the_config_file.png)]
 
 --
 
@@ -406,7 +406,7 @@ Rendre le code résistant
 Mais parfois la documentation est utile...
 
 ---
-.right[![Center-aligned image](/toilet_documentation_s.jpg)]
+.right[![Center-aligned image](toilet_documentation_s.jpg)]
 
 ---
 ## Documentation
@@ -425,16 +425,16 @@ layout: true
 ---
 
 ---
-.top[![argh the diff](/diff_of_rename.png)]
+.top[![argh the diff](diff_of_rename.png)]
 
 ---
-.top[![argh the diff](/exploded_diff.png)]
+.top[![argh the diff](exploded_diff.png)]
 
 ---
-.top[![example code](/example_of_output_code.png)]
+.top[![example code](example_of_output_code.png)]
 
 ---
-.bottom[![argh the diff](/project_layout.png)]
+.bottom[![argh the diff](project_layout.png)]
 
 ---
 layout: false
