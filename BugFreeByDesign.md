@@ -301,6 +301,44 @@ class: center, middle
 Demo time!
 
 ---
+# Code testable caché
+
+```typescript
+let data = callToDependency()
+//
+// pure logic
+// pure logic
+// pure logic
+// pure logic
+// pure logic
+//
+let dataOther = callToDependency2()
+```
+
+---
+# Code testable caché
+```typescript
+
+requestExternalServer().then(() =>
+    persistence.get(key)).then(result => {
+
+        const langToUpdate = {};
+        versionsLangs.map((versionLang) => {
+            let restPath = versionLang.entity.toRestPath();
+
+            result.dates.langsDates.map(datePayload => {
+                if (restPath === datePayload.langRestPath) {
+                    langToUpdate[restPath] = langToUpdate[restPath] || {};
+                    langToUpdate[restPath].dates = datePayload.payload.dates;
+                }
+            });
+
+        });
+        return persistence.update(key, langToUpdate)
+})
+```
+
+---
 ## Edge-less code
 Réduction de charge cognitive. Nombre de cas possibles
 
@@ -309,7 +347,7 @@ Réduction de charge cognitive. Nombre de cas possibles
 	- ex filter
 - Eliminer exceptions
 
-## Code scopé
+## Petites méthodes  
   - Code focalisé, moins de possibilités
 
 ## Etat immuable
@@ -407,6 +445,15 @@ layout: false
 - Calling non-existing method
 - Configs
 - lambdas au lieu de for/while
+- Compteur parallèle 
+
+
+---
+
+# Proposition pour demain
+1. Au prochain bug: pourquoi? Que peut-on changer?
+2. Lire du code sous cet angle
+3. Se méfier des primitives 
 
 ---
 class: center, middle
