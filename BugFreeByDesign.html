@@ -8,6 +8,7 @@
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
+      .remark-slide-content { background-size: contain; }
       body { font-family: 'Droid Serif'; }
       h1, h2, h3 {
         font-family: 'Yanone Kaffeesatz';
@@ -20,6 +21,11 @@
         bottom: 3em;
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .column:first-of-type {float:left}
+      .column:last-of-type {float:right}
+      
+      .split-50 .column:first-of-type {width: 50%}
+      .split-50 .column:last-of-type {width: 50%}  
     </style>
   </head>
   <body>
@@ -30,7 +36,10 @@
     <script src="./remark-latest.min.js">
     </script>
     <script>
-      var slideshow = remark.create({highlightStyle: 'idea', sourceUrl: 'BugFreeByDesign.md'});    
+      var slideshow = remark.create({
+	      slideNumberFormat: '',
+	      highlightStyle: 'idea', 
+	      sourceUrl: 'BugFreeByDesign.md'});    
     </script>
   </body>
 </html>

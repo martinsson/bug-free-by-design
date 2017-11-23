@@ -1,18 +1,37 @@
 
 class: center, middle
 # Bug Free, By Design
-A la poursuite des bugs, au delà des tests
+21 facons de rendre son code résistant aux bugs sans parler de tests!
 
 .footnote[.red.bold[@johan_alps], Developer]
 
+---
+background-image: url(/sponsors-agile-grenoble.jpg)
+background-size: cover;     
+background-position: center;
+background-repeat: no-repeat;
 
 ---
+class: center
+
+# Bugs...
+
+--
+
+.middle[![Center-aligned image](/shit-happens.gif)]
+
+---
+class: split-40, center
 # Design
 
 --
-.left[![Center-aligned image](/impossible_design.png)]
---
-Fais plus attention! 
+.column[![Center-aligned image](/frustrating-kettle-small.jpg)]
+
+.column[![Center-aligned image](/coffeepot-masochists-small-2.jpeg)]
+
+
+???
+Fais plus attention!
 
 ---
 # Agenda
@@ -20,8 +39,7 @@ Fais plus attention!
 2. Rendre les erreurs impossibles
 3. Corriger les erreurs
 4. Orienter - Documentation
-5. Feedback
-6. Exemple en micro services
+5. Exemple en micro services
 
 
 ---
@@ -33,12 +51,39 @@ Améliorer le système - Entonnoir de feedback
 .left[![funnelFeedback](/FunnelOfFeedback_small.png)]
 
 ---
-class: center, middle
-Lorsq'un bug arrive. Quels éléments ont favorisé son apparition?
+class: split-50, middle
+# Lorsq'un bug arrive. 
+.column[
+
+A quel moment a-t-il été introduit? Pourquoi?
+
+Quels éléments ont favorisé son apparition?
+
+Peut-on ramener la détection plus haut dans l'entonnoir?
+]
 
 --
+.column[![funnelFeedback](/FunnelOfFeedback_small.png)]
 
-Peut-on y faire quelque chose?
+---
+### Quelques catalyseurs de bugs
+- Duplication? 
+- Code complexe?
+- Primitives?
+- Formatage? (Arlo Belshee)
+- Erreurs dans les logs trop courants?
+- Modification multi-repo?
+- ...
+
+--
+### Quelques solutions
+- Un script?
+- Dialogue avec PO basé sur exemples?
+- Besoin de données de production?
+- Typage statique
+- Test automatiques? TDD?
+- Refactoring
+- ...
 
 ---
 class: center
@@ -48,44 +93,75 @@ class: center
 
 ---
 # Rendre les erreurs impossibles
-
---
+## Construction d'objets
 
 ```java
-    Menu(){
-        /** can I have starter and main course only? */
+    public Menu() {
+        // Puis-j'avoir entrée-plat seulement?
     }
 ```
 --
 
 ```java
-    Menu(String mainCourse, String starter, String dessert) {
-        // Better but still...
+    public Menu(String mainCourse, String starter, String dessert) {
+        // attention à l'ordre...
     }
 
 ```
 --
 
 ```java
-    Menu(MainCourse mainCourse, Starter starter, Dessert dessert) {
+    public Menu(MainCourse mainCourse, Starter starter, Dessert dessert) {
         // oh yeah!
     }
-
 ```
+--
+
+
+```javascript
+    static starterAndMainCourse(starter, mainCourse) {
+        // in languages where you have only one constructor
+        // Factory method / Named constructor
+    }
+``` 
+
 
 ---
 # Rendre les erreurs impossibles
 - Instantiation en 2 fois
 - Couplage temporel
+- Primitive Obsession
 - Couplage sans cohésion
 
-
-
 ---
-
 # Couplage temporel
 
+
+```typescript
+    let buggyConnector = new BuggyConnector(port);
+    buggyConnector.connect();
+    buggyConnector.putData("hello");
+```
 --
+
+```typescript    
+    new Connector(port)
+        .connect()
+        .putData("hello");
+
+```
+
+--
+
+```typescript
+	class Connector {
+	    connect() {
+	        return new OpenConnection()
+	    }	
+	}
+```
+---
+# Couplage temporel encore
 
 ```javascript
 describe('TicTacToe', () => {
@@ -111,11 +187,10 @@ describe('TicTacToe', () => {
 });
 ```
 
+
 ---
 
-# Couplage sans cohésion 
-
-Primitive Obsession
+# Primitive Obsession
 
 ```typescript
 ticTacToe.occupy(1, 1);
@@ -128,8 +203,7 @@ ticTacToe.occupy(2, 3); // illegal input?
 ```
 
 ---
-# Couplage sans cohésion 
-No Primitive Obsession
+# No Primitive Obsession
 
 ```typescript
 describe('TicTacToe', () => {
@@ -165,8 +239,8 @@ class TicTacToe {
 ```typescript
 
     public occupyY(row: number, column: number): any {
-        this.assertIsPlayerYTurn();
-        this.assertIsInsideLimits();
+        this.assertIsPlayerYTurn('Y');
+        this.assertIsInsideLimits(row, column);
         // ...
     }
 ```
@@ -175,8 +249,8 @@ class TicTacToe {
 # Types avancées
 ```typescript
     public occupyY(row: number, column: number): any {
-        this.assertIsPlayerYTurn();
-        this.assertIsInsideLimits();
+        this.assertIsPlayerYTurn('Y');
+        this.assertIsInsideLimits(row, column);
         this.assertBoardHasFreeCells(); // <<=====
         // ...
     }
@@ -184,9 +258,8 @@ class TicTacToe {
 
 ---
 # Types avancées
-playing a tenth time shouldn't compile
-
-
+On ne peut jouer que 9 fois.
+--
 .left[![funnelFeedback](/TicTacToe_Typed.png)]
 
 ---
@@ -210,13 +283,45 @@ class SecondState implements ITicTacToe<ThirdState> {
     }
 }
 ```
+--
+```typescript
+class NinthState implements ITicTacToe<EndState> {
+    public occupy(row: any, column: any): EndState {
+        return new EndState();
+    }
+}
+
+class EndState  {
+}
+```
 
 ---
-# null
-> Null reference ... my billion dollar mistake
->
-> -- <cite>Tony Hoare</cite>
+class: center, middle
+# Couplage sans cohésion
+Demo time!
 
+---
+## Edge-less code
+Réduction de charge cognitive. Nombre de cas possibles
+
+- If-less
+- lambdas 
+	- ex filter
+- Eliminer exceptions
+
+## Code scopé
+  - Code focalisé, moins de possibilités
+
+## Etat immuable
+  - pas de vecteur temps
+  - pas de messages implicites
+
+
+---
+# C'est nul!
+>  I call it my billion-dollar mistake. It was the invention of the null reference in 1965
+>
+> -- <cite>Tony Hoare - quick sort inventor</cite>
 
 --
 
@@ -224,42 +329,150 @@ class SecondState implements ITicTacToe<ThirdState> {
 
 ```javascript
   /** 
-   * javascript FTW!
+   * javascript <3 <3 <3
    */
-  function nullIsCool(value) {
+  function nullCestNul(value) {
      if (value == null)
 	       return undefined
   }
-
 ```
 
 --
-# D'autres langages font autrement
+## D'autres langages font autrement
 Non nullable types!
 
-___
-Class: center, middle
-# More types
+---
+class: center, middle
+# Corriger les erreurs
 
-Calling non-existing method
+Eviter de corriger la config:
+--
+.top[![Center-aligned image](/dont_fix_the_config_file.png)]
+
+--
+
+Rendre le code résistant
+
+
+---
+## Documentation
+
+```java
+/** 
+ * Lorsque le design est intuitive, la documentation est inutile. 
+ */
+```
+
+--
+
+Mais parfois la documentation est utile...
+
+---
+.right[![Center-aligned image](/toilet_documentation_s.jpg)]
+
+---
+## Documentation
+> Documentation is hard because of 'cache invalidation and naming things'
+>
+> -- <cite>Inspired by Phil Carlton</cite>
+
+La documentation a un coût. 
+
+---
+layout: true
+## Couplage et cohésion...
+
+... Micro service configuration (hell)
+
+---
+
+---
+.top[![argh the diff](/diff_of_rename.png)]
+
+---
+.top[![argh the diff](/exploded_diff.png)]
+
+---
+.top[![example code](/example_of_output_code.png)]
+
+---
+.bottom[![argh the diff](/project_layout.png)]
+
+---
+layout: false
+
+# Une étude de cas
+
+- Manque de tests (fonction pure caché dans du code non testable)
+- Calling non-existing method
+- Configs
+- lambdas au lieu de for/while
+
+---
+class: center, middle
+# Merci!
+
+---
+## List of patterns
+
+### Poka Yoke
+- Quand bug il y a, quels élements ont favorisé son apparition
+- Funnel de feedback
+
+### Etats illegaux irrepresentables
+- Validations in construcor (à partir de la c'est correct)
+- Mandatory parameters in constructor
+- Un constructeur par comb valable.
+  - ou Named factories (c'est quoi la semantique, cents/euros, pourcent, index/nombre/id)
+- Builder pattern?
+
+### Nullabilité
+- Maybe/Optional
+- Types non nullables
+- Ne jamais retourner null
+
+### Static typing
+- Typer les paramètres 
+  - problème d'inversion
+- plus de "undefined is not a function"!
+
+### Refactorings avec IDE
+- Plusieurs sont prouvés correct
+
+### Fix the input
+- config files...!
+- generate the config 
+  - validation
+  - non duplication
+  
+### Divers
+- dédupliquer
+- Eviter les ifs (qui dissimulent les règles métier)
+- Objets immuables
+
+### Process
+- Mono repo?
+- Exemples avec PO
+
+---
+# ce qui suit par la suite est exclu de la présentation 
+
+---
+
+# Feedback
+Permettre à l'utilisateur de corriger son erreur.
+## Ex: Go to page bug
+https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/ui/book/Book.js
+https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/ui/book/navigation/Navigation.js
+https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/data/utility/search/SearchOccurenceContext.js
+
+## formatting as bug source
+
 
 ---
 # More types
 - Types : Total code, Maybe/Optional
 - Types : Dependent types (types aussi puissantes que le runtime)  => Idris
-
----
-## Edge-less code
-Réduction de charge cognitive. Nombre de cas possibles
-
-- No-if
-- lambdas
-- Eliminer exceptions
-- Scoped code
-  - Code focalisé, moins de possibilités
-- Etat immuable
-  - pas de vecteur temps
-  - pas de messages implicites
 
 ---
 # Maybe - Monads
@@ -311,75 +524,4 @@ Réduction de charge cognitive. Nombre de cas possibles
     }
 ```
 
----
-class: center, middle
-# Corriger les erreurs
 
-Eviter de corriger la config:
-
-.top[![Center-aligned image](/dont_fix_the_config_file.png)]
-
---
-
-Rendre le code résistant
-
-
----
-## Documentation
-
-```java
-/** 
- * Lorsque le design est intuitive, la documentation est inutile. 
- */
-```
-
---
-
-Mais parfois la documentation est utile...
-
----
-.right[![Center-aligned image](/toilet_documentation_s.jpg)]
-
----
-## Documentation
-> Documentation is hard because of 'cache invalidation and naming things'
->
-> -- <cite>Inspired by Phil Carlton</cite>
-
-La documentation a un coût. 
-
----
-layout: true
-## Couplage et cohésion...
-
-___
-
-... Micro service configuration (hell)
-
----
-.top[![argh the diff](/diff_of_rename.png)]
-
----
-.top[![argh the diff](/exploded_diff.png)]
-
----
-.top[![example code](/example_of_output_code.png)]
-
----
-.bottom[![argh the diff](/project_layout.png)]
-
----
-layout: false
-
----
-class: center, middle
-#Merci!
-
-
----
-# Feedback
-Permettre à l'utilisateur de corriger son erreur.
-## Ex: Go to page bug
-https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/ui/book/Book.js
-https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/ui/book/navigation/Navigation.js
-https://gitlab.bbuzcloud.com/nextgen/beevirtua-front/blob/master/src/beevirtua/data/utility/search/SearchOccurenceContext.js
