@@ -18,7 +18,7 @@ class: center
 
 --
 
-.middle[![Center-aligned image](/shit-happens.gif)]
+.middle[![Center-aligned image](shit-happens.gif)]
 
 ---
 class: split-40, center
