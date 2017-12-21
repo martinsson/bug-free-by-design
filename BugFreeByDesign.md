@@ -260,7 +260,7 @@ class TicTacToe {
 # Types avancées
 On ne peut jouer que 9 fois.
 --
-.left[![funnelFeedback](/TicTacToe_Typed.png)]
+.left[![funnelFeedback](TicTacToe_Typed.png)]
 
 ---
 
