@@ -6,12 +6,6 @@ class: center, middle
 .footnote[.red.bold[@johan_alps], Developer]
 
 ---
-background-image: url(sponsors-agile-grenoble.jpg)
-background-size: cover;     
-background-position: center;
-background-repeat: no-repeat;
-
----
 class: center
 
 # Bugs...
