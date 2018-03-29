@@ -60,24 +60,9 @@ Peut-on ramener la détection plus haut dans l'entonnoir?
 .column[![funnelFeedback](FunnelOfFeedback_small.png)]
 
 ---
-### Quelques catalyseurs de bugs
-- Duplication? 
-- Code complexe?
-- Primitives?
-- Formatage? (Arlo Belshee)
-- Erreurs dans les logs trop courants?
-- Modification multi-repo?
-- ...
+### Des idées pour l'éviter?
 
---
-### Quelques solutions
-- Un script?
-- Dialogue avec PO basé sur exemples?
-- Besoin de données de production?
-- Typage statique
-- Test automatiques? TDD?
-- Refactoring
-- ...
+.center[![solutions](solutions.jpg)]
 
 ---
 class: center
@@ -344,7 +329,7 @@ Extract pure function
 
 requestExternalServer().then(() =>
     persistence.get(key)).then(result => {
-				let langToUpdate = makeLang(key, result)
+        let langToUpdate = makeLang(key, result)
         return persistence.update(key, langToUpdate)
 })
 
@@ -481,6 +466,7 @@ layout: false
 1. Au prochain bug: pourquoi? Que peut-on changer?
 2. Lire du code sous cet angle
 3. Se méfier des primitives 
+4. S'exercer sur [BugsZero Kata](https://github.com/martinsson/BugsZero-Kata)
 
 ---
 class: center, middle
