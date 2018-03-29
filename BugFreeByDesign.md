@@ -133,14 +133,14 @@ class: center
 
 ```typescript
     let buggyConnector = new BuggyConnector(port);
-    buggyConnector.connect();
+    buggyConnector.connect(); // we can forget this
     buggyConnector.putData("hello");
 ```
 --
 
 ```typescript    
     new Connector(port)
-        .connect()
+        .connect() // impossible to forget
         .putData("hello");
 
 ```
@@ -152,6 +152,10 @@ class: center
 	    connect() {
 	        return new OpenConnection()
 	    }	
+	}
+	
+	class OpenConnection {
+	    putData() { ... }	
 	}
 ```
 ---
@@ -330,6 +334,35 @@ requestExternalServer().then(() =>
         });
         return persistence.update(key, langToUpdate)
 })
+```
+--
+Extract pure function
+
+---
+# Code testable caché
+```typescript
+
+requestExternalServer().then(() =>
+    persistence.get(key)).then(result => {
+				let langToUpdate = makeLang(key, result)
+        return persistence.update(key, langToUpdate)
+})
+
+function makeLang(key, result) {
+	const langToUpdate = {};
+	versionsLangs.map((versionLang) => {
+	    let restPath = versionLang.entity.toRestPath();
+	
+	    result.dates.langsDates.map(datePayload => {
+	        if (restPath === datePayload.langRestPath) {
+	            langToUpdate[restPath] = langToUpdate[restPath] || {};
+	            langToUpdate[restPath].dates = datePayload.payload.dates;
+	        }
+	    });
+	});
+	return langToUpdate;
+
+}
 ```
 
 ---
