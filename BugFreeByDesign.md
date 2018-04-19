@@ -295,7 +295,7 @@ let data = callToDependency()
 // pure logic
 // pure logic
 //
-let dataOther = callToDependency2()
+callToDependency2(transformedData)
 ```
 
 ---
@@ -366,6 +366,38 @@ Réduction de charge cognitive. Nombre de cas possibles
   - pas de vecteur temps
   - pas de messages implicites
 
+---
+
+# Trop de conditionnels
+Git log
+* fix suppression
+* correction suppression
+* fix delete
+...
+--
+
+```typescript
+   private findPokerFaceIndex(srcPokerFaces, updatePockerFace){
+        const indexToDelete = [];
+        let indexOriginal = 0;
+        srcPokerFaces.forEach((pokerFaceOriginal) => {
+            let index = 0;
+            while (index < updatePockerFace.length 
+	            && updatePockerFace[index].alternativeFaceId !==
+	             pokerFaceOriginal.alternativeFaceId) {
+                index++;
+            }
+            console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+	            index === srcPokerFaces.length,index , updatePockerFace.length)
+            if (index === updatePockerFace.length) {
+                console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@tetst")
+                indexToDelete.push(indexOriginal + 1);
+            }
+            indexOriginal++;
+        });
+        return indexToDelete;
+    }
+```
 
 ---
 # C'est nul!
@@ -421,14 +453,6 @@ Mais parfois la documentation est utile...
 .right[![Center-aligned image](toilet_documentation_s.jpg)]
 
 ---
-## Documentation
-> Documentation is hard because of 'cache invalidation and naming things'
->
-> -- <cite>Inspired by Phil Carlton</cite>
-
-La documentation a un coût. 
-
----
 layout: true
 ## Couplage et cohésion...
 
@@ -451,16 +475,6 @@ layout: true
 ---
 layout: false
 
-# Une étude de cas
-
-- Manque de tests (fonction pure caché dans du code non testable)
-- Calling non-existing method
-- Configs
-- lambdas au lieu de for/while
-- Compteur parallèle 
-
-
----
 
 # Proposition pour demain
 1. Au prochain bug: pourquoi? Que peut-on changer?
@@ -468,8 +482,15 @@ layout: false
 3. Se méfier des primitives 
 4. S'exercer sur [BugsZero Kata](https://github.com/martinsson/BugsZero-Kata)
 
+.footnote[.red.bold[@johan_alps], Developer]
+
 ---
-class: center, middle
-# Merci!
+
+# Une étude de cas
+
+- Configs
+- lambdas au lieu de for/while
+- Compteur parallèle 
+
 
 
