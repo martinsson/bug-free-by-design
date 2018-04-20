@@ -76,7 +76,7 @@ class: center
 
 ```java
     public Menu() {
-        // Puis-j'avoir entrée-plat seulement?
+        // Can I have only starter and main course?
     }
 ```
 --
@@ -144,30 +144,25 @@ class: center
 	}
 ```
 ---
+
 # Couplage temporel encore
 
+Exception?
 ```javascript
-describe('TicTacToe', () => {
-    it('can blow up!', () => {
-        const ticTacToe = new TicTacToe();
-        ticTacToe.occupyX(1, 1);
-        ticTacToe.occupyY(0, 1);
-        ticTacToe.occupyY(0, 0);
-    });
-});
+		const ticTacToe = new TicTacToe();
+		ticTacToe.occupyX(1, 1);
+		ticTacToe.occupyY(0, 1);
+		ticTacToe.occupyY(0, 0);
 ```
 
 --
 
+No error possible
 ```typescript
-describe('TicTacToe', () => {
-    it("just works!", () => {
-        const ticTacToe = new TicTacToe();
-        ticTacToe.occupy(1, 1);
-        ticTacToe.occupy(0, 1);
-        ticTacToe.occupy(0, 0);
-    });
-});
+		const ticTacToe = new TicTacToe();
+		ticTacToe.occupy(1, 1);
+		ticTacToe.occupy(0, 1);
+		ticTacToe.occupy(0, 0);  
 ```
 
 
@@ -176,45 +171,42 @@ describe('TicTacToe', () => {
 # Primitive Obsession
 
 ```typescript
-ticTacToe.occupy(1, 1);
+		ticTacToe.occupy(1, 1);
 ```
 
 --
 
 ```typescript
-ticTacToe.occupy(2, 3); // illegal input?
+		ticTacToe.occupy(2, 3); // illegal input?
 ```
 
 ---
+
 # No Primitive Obsession
 
 ```typescript
-describe('TicTacToe', () => {
-    it("Look ma, can't put outside board!", () => {
-        const ticTacToe = new TicTacToe();
-        ticTacToe.occupy(MIDDLE, CENTER);
-        ticTacToe.occupy(UPPER, LEFT);
-    });
-});
+		const ticTacToe = new TicTacToe();
+		ticTacToe.occupy(MIDDLE, CENTER);
+		ticTacToe.occupy(UPPER, LEFT);
 ```
 
 --
 
 ```typescript
-enum Row {
-    UPPER, MIDDLE, LOWER,
-}
-
-enum Column {
-    LEFT, CENTER, RIGHT,
-}
-
-class TicTacToe {
-
-    public occupy(row: Row, column: Column) {
-        // ...
-    }
-    
+		enum Row {
+		    UPPER, MIDDLE, LOWER,
+		}
+		
+		enum Column {
+		    LEFT, CENTER, RIGHT,
+		}
+		
+		class TicTacToe {
+		
+		    public occupy(row: Row, column: Column) {
+		        // ...
+		    }
+		    
 ```
 
 ---
@@ -284,25 +276,29 @@ class: center, middle
 Demo time!
 
 ---
+background-image: url(trivial.jpg)
+
+
+---
 # Code testable caché
 
 ```typescript
-let data = callToDependency()
-//
-// pure logic
-// pure logic
-// pure logic
-// pure logic
-// pure logic
-//
-callToDependency2(transformedData)
+		let data = callToDependency()
+		//
+		// pure logic
+		// pure logic
+		// pure logic
+		// pure logic
+		// pure logic
+		//
+		callToDependency2(transformedData)
 ```
 
 ---
 # Code testable caché
 ```typescript
 
-requestExternalServer().then(() =>
+requestExternalServer().then((key) =>
     persistence.get(key)).then(result => {
 
         const langToUpdate = {};
@@ -354,7 +350,8 @@ function makeLang(key, result) {
 ## Edge-less code
 Réduction de charge cognitive. Nombre de cas possibles
 
-- If-less
+- If-less 
+	- Option, List, Map/Dictionary, NullObject, Polymorphisme
 - lambdas 
 	- ex filter
 - Eliminer exceptions
@@ -407,8 +404,6 @@ Git log
 
 --
 
-## Javascript
-
 ```javascript
   /** 
    * javascript <3 <3 <3
@@ -419,22 +414,37 @@ Git log
   }
 ```
 
+---
+
+# #NoNull
+
+## Types non nullables!
+typescript, kotlin, ...
+
+
 --
-## D'autres langages font autrement
-Non nullable types!
+## Ailleurs
+Et si on ne retournait null de nul part?
 
 ---
-class: center, middle
+class: center
 # Corriger les erreurs
 
-Eviter de corriger la config:
---
 .top[![Center-aligned image](dont_fix_the_config_file.png)]
 
 --
 
-Rendre le code résistant
+Evitons de corriger la config. Rendons le code résistant
+--
 
+```typescript
+Url.join(hostname, path) 
+```
+--
+
+```typescript
+socketHost.appendPath(path)
+```
 
 ---
 ## Documentation
@@ -460,14 +470,17 @@ layout: true
 
 ---
 
+.top[![argh the diff](config-generator-problem.png)]
+
+---
+
+.top[![argh the diff](config-generator-solution.png)]
+
 ---
 .top[![argh the diff](diff_of_rename.png)]
 
 ---
 .top[![argh the diff](exploded_diff.png)]
-
----
-.top[![example code](example_of_output_code.png)]
 
 ---
 .bottom[![argh the diff](project_layout.png)]
@@ -482,7 +495,9 @@ layout: false
 3. Se méfier des primitives 
 4. S'exercer sur [BugsZero Kata](https://github.com/martinsson/BugsZero-Kata)
 
-.footnote[.red.bold[@johan_alps], Developer]
+.footnote[.red.bold[@johan_alps    
+martinsson.johan@blogspot.com ]]
+
 
 ---
 
