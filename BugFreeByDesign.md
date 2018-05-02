@@ -28,15 +28,6 @@ class: split-40, center
 Fais plus attention!
 
 ---
-# Agenda
-1. Poka Yoke - améliorer le système
-2. Rendre les erreurs impossibles
-3. Corriger les erreurs
-4. Orienter - Documentation
-5. Exemple en micro services
-
-
----
 # Poka Yoke
 Améliorer le système - Entonnoir de feedback
 
@@ -63,6 +54,13 @@ Peut-on ramener la détection plus haut dans l'entonnoir?
 ### Des idées pour l'éviter?
 
 .center[![solutions](solutions.jpg)]
+
+
+---
+# Priorités
+1. Rendre les erreurs impossibles
+2. Corriger les erreurs
+3. Orienter - Documentation
 
 ---
 class: center
