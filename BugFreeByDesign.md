@@ -16,7 +16,7 @@ class: center
 
 ---
 class: split-40, center
-# Design
+# Design 
 
 --
 .column[![Center-aligned image](frustrating-kettle-small.jpg)]
@@ -26,6 +26,20 @@ class: split-40, center
 
 ???
 Fais plus attention!
+
+---
+background-image: url(gertie3.jpg)
+
+---
+background-image: url(crash-test.jpg)
+
+
+---
+background-image: url(Car-crash-old.jpg)
+
+
+---
+background-image: url(Car-crash-modern.jpg)
 
 ---
 # Poka Yoke
