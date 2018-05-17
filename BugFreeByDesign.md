@@ -1,7 +1,7 @@
 
 class: center, middle
 # Bug Free, By Design
-21 facons de rendre son code résistant aux bugs sans parler de tests!
+21 ways to make code resistent to bugs without talking about tests!
 
 .footnote[.red.bold[@johan_alps], Developer]
 
@@ -25,7 +25,7 @@ class: split-40, center
 
 
 ???
-Fais plus attention!
+Pay more attention!
 
 ---
 background-image: url(gertie3.jpg)
@@ -43,7 +43,7 @@ background-image: url(Car-crash-modern.jpg)
 
 ---
 # Poka Yoke
-Améliorer le système - Entonnoir de feedback
+Improve the system - Funnel of feedback
 
 --
 
@@ -54,37 +54,45 @@ class: split-50, middle
 # Lorsq'un bug arrive. 
 .column[
 
-A quel moment a-t-il été introduit? Pourquoi?
+When was it introduced? Why?
 
-Quels éléments ont favorisé son apparition?
+Which elements made it more likely? Why?
 
-Peut-on ramener la détection plus haut dans l'entonnoir?
+Could we bring detection further up in the funnel?
 ]
 
 --
 .column[![funnelFeedback](FunnelOfFeedback_small.png)]
 
 ---
-### Des idées pour l'éviter?
+### Any ideas?
 
 .center[![solutions](solutions.jpg)]
 
 
 ---
-# Priorités
-1. Rendre les erreurs impossibles
-2. Corriger les erreurs
-3. Orienter - Documentation
+# Priorities
+1. Make the errors impossible
+2. Compensate for them
+2. Make them less likely
+3. Document the correct use
 
 ---
 class: center
-# Rendre les erreurs impossibles
+# Making errors impossible
 
 .center[![Center-aligned image](toy.png)]
 
 ---
-# Rendre les erreurs impossibles
-## Construction d'objets
+# Making errors impossible
+- Unconstrained construction
+- Temporal coupling
+- Primitive Obsession
+- Couplage sans cohésion
+
+---
+# Making errors impossible
+## Constrain construction
 
 ```java
     public Menu() {
@@ -95,7 +103,7 @@ class: center
 
 ```java
     public Menu(String mainCourse, String starter, String dessert) {
-        // attention à l'ordre...
+        // beware of ordering...
     }
 
 ```
@@ -108,24 +116,16 @@ class: center
 ```
 --
 
-
-```javascript
-    static starterAndMainCourse(starter, mainCourse) {
-        // in languages where you have only one constructor
-        // Factory method / Named constructor
-    }
+```typescript
+    // in languages where you have only one constructor
+    // Factory methods / Named constructors
+    static mainCourseAndStarter(mainCourse, starter) {}
+    static mainCourseAndDessert(mainCourse, dessert) {}
+    static fullMenu(mainCourse, starter, dessert) {}
 ``` 
 
-
 ---
-# Rendre les erreurs impossibles
-- Instantiation en 2 fois
-- Couplage temporel
-- Primitive Obsession
-- Couplage sans cohésion
-
----
-# Couplage temporel
+# Temporal coupling
 
 
 ```typescript
@@ -157,14 +157,14 @@ class: center
 ```
 ---
 
-# Couplage temporel encore
+# More temporal coupling
 
 Exception?
 ```javascript
 		const ticTacToe = new TicTacToe();
 		ticTacToe.occupyX(1, 1);
-		ticTacToe.occupyY(0, 1);
-		ticTacToe.occupyY(0, 0);
+		ticTacToe.occupyO(0, 1);
+		ticTacToe.occupyO(0, 0);
 ```
 
 --
@@ -175,6 +175,16 @@ No error possible
 		ticTacToe.occupy(1, 1);
 		ticTacToe.occupy(0, 1);
 		ticTacToe.occupy(0, 0);  
+```
+
+--
+
+Or immutable
+```typescript
+		const ticTacToe = new TicTacToe()
+			.occupy(1, 1);
+			.occupy(0, 1);
+			.occupy(0, 0);  
 ```
 
 
@@ -222,30 +232,30 @@ No error possible
 ```
 
 ---
-# Assertions remplacés par les types
+# Assertions are replaced by the compiler
 ```typescript
 
-    public occupyY(row: number, column: number): any {
-        this.assertIsPlayerYTurn('Y');
+    public occupyX(row: number, column: number) {
+        this.assertIsPlayerYTurn('X');
         this.assertIsInsideLimits(row, column);
         // ...
     }
 ```
 
 ---
-# Types avancées
+# Going further with types
 ```typescript
-    public occupyY(row: number, column: number): any {
-        this.assertIsPlayerYTurn('Y');
+    public occupyX(row: number, column: number) {
+        this.assertIsPlayerYTurn('X');
         this.assertIsInsideLimits(row, column);
-        this.assertBoardHasFreeCells(); // <<=====
+        this.assertBoardHasFreeCells(); // <<===== 
         // ...
     }
 ```
 
 ---
-# Types avancées
-On ne peut jouer que 9 fois.
+# Going further with types
+Can't make more than 9 placements
 --
 .left[![funnelFeedback](TicTacToe_Typed.png)]
 
@@ -284,7 +294,7 @@ class EndState  {
 
 ---
 class: center, middle
-# Couplage sans cohésion
+# Coupling without cohesion
 Demo time!
 
 ---
@@ -292,7 +302,7 @@ background-image: url(trivial.jpg)
 
 
 ---
-# Code testable caché
+# Hidden testable code
 
 ```typescript
 		let data = callToDependency()
@@ -307,7 +317,7 @@ background-image: url(trivial.jpg)
 ```
 
 ---
-# Code testable caché
+# Hidden testable code
 ```typescript
 
 requestExternalServer().then((key) =>
@@ -332,7 +342,7 @@ requestExternalServer().then((key) =>
 Extract pure function
 
 ---
-# Code testable caché
+# Hidden testable code
 ```typescript
 
 requestExternalServer().then(() =>
@@ -360,24 +370,24 @@ function makeLang(key, result) {
 
 ---
 ## Edge-less code
-Réduction de charge cognitive. Nombre de cas possibles
+Reduce cognitive load. Reduce the number of possibilities.
 
 - If-less 
 	- Option, List, Map/Dictionary, NullObject, Polymorphisme
 - lambdas 
 	- ex filter
-- Eliminer exceptions
+- Eliminate exceptions
 
-## Petites méthodes  
-  - Code focalisé, moins de possibilités
+## Small methods
+  - Focused code, less possibilities
 
-## Etat immuable
-  - pas de vecteur temps
-  - pas de messages implicites
+## Immutability
+  - no time vector
+  - no implicit messages
 
 ---
 
-# Trop de conditionnels
+# Conditional logic and use of indices
 Git log
 * fix suppression
 * correction suppression
@@ -409,7 +419,7 @@ Git log
 ```
 
 ---
-# C'est nul!
+# C'est nul! 
 >  I call it my billion-dollar mistake. It was the invention of the null reference in 1965
 >
 > -- <cite>Tony Hoare - quick sort inventor</cite>
@@ -430,23 +440,23 @@ Git log
 
 # #NoNull
 
-## Types non nullables!
+## Non nullable types!
 typescript, kotlin, ...
 
 
 --
-## Ailleurs
-Et si on ne retournait null de nul part?
+## Elsewhere
+What if we never returned null?
 
 ---
 class: center
-# Corriger les erreurs
+# Compensate for errors
 
 .top[![Center-aligned image](dont_fix_the_config_file.png)]
 
 --
 
-Evitons de corriger la config. Rendons le code résistant
+Fix the design, not the configuration.
 --
 
 ```typescript
@@ -463,20 +473,20 @@ socketHost.appendPath(path)
 
 ```java
 /** 
- * Lorsque le design est intuitive, la documentation est inutile. 
+ * When the design is intuitive documentation is useless 
  */
 ```
 
 --
 
-Mais parfois la documentation est utile...
+But sometimes documentation is useful...
 
 ---
 .right[![Center-aligned image](toilet_documentation_s.jpg)]
 
 ---
 layout: true
-## Couplage et cohésion...
+## Coupling and cohesion...
 
 ... Micro service configuration (hell)
 
@@ -501,23 +511,16 @@ layout: true
 layout: false
 
 
-# Proposition pour demain
-1. Au prochain bug: pourquoi? Que peut-on changer?
-2. Lire du code sous cet angle
-3. Se méfier des primitives 
-4. S'exercer sur [BugsZero Kata](https://github.com/martinsson/BugsZero-Kata)
+# Suggestion for tomorrow
+1. Next bug: Why? What can we change?
+2. Code reviews with error proneness in mind
+3. Beware of Primitive Obsession
+4. Train yourself [BugsZero Kata](https://github.com/martinsson/BugsZero-Kata)
 
 .footnote[.red.bold[@johan_alps    
 martinsson.johan@blogspot.com ]]
 
-
 ---
-
-# Une étude de cas
-
-- Configs
-- lambdas au lieu de for/while
-- Compteur parallèle 
 
 
 
