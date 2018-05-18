@@ -420,6 +420,21 @@ Git log
 ```
 
 ---
+
+# Conditional logic and use of indices
+Git log
+* fix suppression
+* correction suppression
+* fix delete
+...
+
+--
+## Non readable code
+
+--
+## Missing abstraction: cascade delete on foreign keys
+
+---
 # C'est nul! 
 >  I call it my billion-dollar mistake. It was the invention of the null reference in 1965
 >
@@ -483,7 +498,7 @@ socketHost.appendPath(path)
 But sometimes documentation is useful...
 
 ---
-.right[![Center-aligned image](toilet_documentation_s.jpg)]
+background-image: url(toilet_documentation_s.jpg)
 
 ---
 layout: true
@@ -517,7 +532,7 @@ layout: false
 2. Code reviews with error proneness in mind
 3. Beware of Primitive Obsession
 4. Train yourself [BugsZero Kata](https://github.com/martinsson/BugsZero-Kata)
-5. Have a look at a presentation by Arlo Belshee
+5. Watch a presentation by Arlo Belshee
 
 .footnote[.red.bold[@johan_alps    
 martinsson.johan@blogspot.com ]]
