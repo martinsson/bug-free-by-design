@@ -51,7 +51,7 @@ Improve the system - Funnel of feedback
 
 ---
 class: split-50, middle
-# Lorsq'un bug arrive. 
+# Whenever there's a bug
 .column[
 
 When was it introduced? Why?
