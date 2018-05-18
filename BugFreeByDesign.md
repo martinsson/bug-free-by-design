@@ -91,9 +91,10 @@ class: center
 - Couplage sans cohésion
 
 ---
-# Making errors impossible
-## Constrain construction
+background-image: url(madeleinemold.jpg)
+# Constrain construction
 
+--
 ```java
     public Menu() {
         // Can I have only starter and main course?
@@ -119,9 +120,9 @@ class: center
 ```typescript
     // in languages where you have only one constructor
     // Factory methods / Named constructors
-    static mainCourseAndStarter(mainCourse, starter) {}
-    static mainCourseAndDessert(mainCourse, dessert) {}
-    static fullMenu(mainCourse, starter, dessert) {}
+    public static mainCourseAndStarter(mainCourse, starter) {}
+    public static mainCourseAndDessert(mainCourse, dessert) {}
+    public static fullMenu(mainCourse, starter, dessert) {}
 ``` 
 
 ---
@@ -181,8 +182,8 @@ No error possible
 
 Or immutable
 ```typescript
-		const ticTacToe = new TicTacToe()
-			.occupy(1, 1);
+		const ticTacToe = new TicTacToeX()
+			.occupy(1, 1); // instanceOf TicTacToeY is returned
 			.occupy(0, 1);
 			.occupy(0, 0);  
 ```
@@ -516,6 +517,7 @@ layout: false
 2. Code reviews with error proneness in mind
 3. Beware of Primitive Obsession
 4. Train yourself [BugsZero Kata](https://github.com/martinsson/BugsZero-Kata)
+5. Have a look at a presentation by Arlo Belshee
 
 .footnote[.red.bold[@johan_alps    
 martinsson.johan@blogspot.com ]]
