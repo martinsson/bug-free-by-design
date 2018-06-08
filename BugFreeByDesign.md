@@ -79,6 +79,7 @@ Could we bring detection further up in the funnel?
 
 ---
 class: center
+
 # Making errors impossible
 
 .center[![Center-aligned image](toy.png)]
@@ -88,7 +89,7 @@ class: center
 - Unconstrained construction
 - Temporal coupling
 - Primitive Obsession
-- Couplage sans cohésion
+- Coupling without Cohesion
 
 ---
 background-image: url(madeleinemold.jpg)
