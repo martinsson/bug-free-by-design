@@ -297,7 +297,7 @@ class EndState  {
 ---
 class: center, middle
 # Coupling without cohesion
-Demo time!
+... Responsible for most bugs
 
 ---
 background-image: url(trivial.jpg)
@@ -458,7 +458,7 @@ Git log
 # #NoNull
 
 ## Non nullable types!
-typescript, kotlin, ...
+typescript, kotlin, PHP, ...
 
 
 --
@@ -496,7 +496,7 @@ socketHost.appendPath(path)
 
 --
 
-But sometimes documentation is useful...
+But sometimes documentation is useful
 
 ---
 background-image: url(toilet_documentation_s.jpg)
@@ -539,6 +539,12 @@ layout: false
 martinsson.johan@blogspot.com ]]
 
 ---
+
+
+Ideas: error elimination is DDD, transparency - bugs can't hide in full daylight (understandability, testability)
+
+Michael's ideas: make the error handling a first-class domain concept, goes for exceptions, and failure, ...? 
+
 
 
 
