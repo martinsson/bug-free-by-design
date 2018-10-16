@@ -1,7 +1,7 @@
 
 class: center, middle
 # Bug Free, By Design
-21 ways to make code resistent to bugs without talking about tests!
+21 ways to make code resistant to bugs without talking about tests!
 
 .footnote[.red.bold[@johan_alps], Developer]
 
@@ -388,6 +388,36 @@ Reduce cognitive load. Reduce the number of possibilities.
   - no implicit messages
 
 ---
+# C'est nul! 
+>  I call it my billion-dollar mistake. It was the invention of the null reference in 1965
+>
+> -- <cite>Tony Hoare - quick sort inventor</cite>
+
+--
+
+```javascript
+  /** 
+   * javascript <3 <3 <3
+   */
+  function nullCestNul(value) {
+     if (value == null)
+	       return undefined
+  }
+```
+
+---
+
+# #NoNull
+
+## Non nullable types!
+typescript, kotlin, PHP, ...
+
+
+--
+## Elsewhere
+What if we never returned null?
+
+---
 
 # Conditional logic and use of indices
 Git log
@@ -430,40 +460,13 @@ Git log
 ...
 
 --
-## Non readable code
-
---
 ## Missing abstraction: cascade delete on foreign keys
 
 ---
-# C'est nul! 
->  I call it my billion-dollar mistake. It was the invention of the null reference in 1965
->
-> -- <cite>Tony Hoare - quick sort inventor</cite>
 
---
+class: center, middle
 
-```javascript
-  /** 
-   * javascript <3 <3 <3
-   */
-  function nullCestNul(value) {
-     if (value == null)
-	       return undefined
-  }
-```
-
----
-
-# #NoNull
-
-## Non nullable types!
-typescript, kotlin, PHP, ...
-
-
---
-## Elsewhere
-What if we never returned null?
+# Hard to understand code
 
 ---
 class: center
@@ -473,7 +476,7 @@ class: center
 
 --
 
-Fix the design, not the configuration.
+## Fix the design, not the configuration.
 --
 
 ```typescript
@@ -527,6 +530,15 @@ layout: true
 ---
 layout: false
 
+# Source of bugs - false assumption
+### Coupling without cohesion
+### Non testable code
+### Hard to understand code
+
+--
+### Unclear specs
+
+---
 
 # Suggestion for tomorrow
 1. Next bug: Why? What can we change?
