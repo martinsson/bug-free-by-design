@@ -86,6 +86,7 @@ class: center
 
 ---
 # Making errors impossible
+### By eliminating weak design
 - Unconstrained construction
 - Temporal coupling
 - Primitive Obsession
@@ -93,7 +94,7 @@ class: center
 
 ---
 background-image: url(madeleinemold.jpg)
-# Constrain construction
+# Unconstrained construction
 
 --
 ```java
@@ -375,10 +376,10 @@ function makeLang(key, result) {
 Reduce cognitive load. Reduce the number of possibilities.
 
 - If-less 
-	- Option, List, Map/Dictionary, NullObject, Polymorphisme
+	- Option, List, Map/Dictionary, NullObject, Polymorphism
 - lambdas 
 	- ex filter
-- Eliminate exceptions
+- Eliminate exceptions (throw early, catch late)
 
 ## Small methods
   - Focused code, less possibilities
@@ -489,7 +490,7 @@ socketHost.appendPath(path)
 ```
 
 ---
-## Documentation
+## Document correct use
 
 ```java
 /** 
@@ -499,7 +500,13 @@ socketHost.appendPath(path)
 
 --
 
-But sometimes documentation is useful
+However documentation is great, when
+
+...it is in the right place
+
+... it tells you what you need
+
+... And it does not require maintenance
 
 ---
 background-image: url(toilet_documentation_s.jpg)
